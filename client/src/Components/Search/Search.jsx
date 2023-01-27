@@ -8,32 +8,25 @@ import { useState, useEffect } from 'react';
 
 const Search = () => {
   const dispatch = useDispatch();
-  const [isOn, setIsOn] = useState(false);
+  const [isOn, setIsOn] = useState(true);
   const [events, setEvents] = useState('ALF');
-  function handleChange() {
-    setIsOn((prevIsOn) => !prevIsOn);
-  }
 
-  const handlerButton = (event) => {
+  const handleChange = () => setIsOn(!isOn);
+  const handleEvents = () => {
+    if (events === 'ALF') dispatch(alfPokemons(isOn));
+    else if (events === 'Attack') dispatch(attackPokemons(isOn));
+  };
+  const handleSelect = (event) => {
     setEvents(String(event.target.value));
   };
-
   useEffect(() => {
-    switch (events) {
-      case 'ALF':
-        dispatch(alfPokemons(isOn));
-        break;
-      case 'Attack':
-        dispatch(attackPokemons(isOn));
-        break;
-      default:
-        break;
-    }
+    handleEvents();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOn]);
+  }, [isOn,events]);
 
   return (
     <div className='containerSearch'>
+
       <p className={isOn ? 'showTextOn' : 'showTextOff'}>ASD</p>
       <label>
         <input id='check' type='checkbox' checked={isOn} onChange={handleChange} />
@@ -41,14 +34,17 @@ const Search = () => {
       </label>
       <p className={!isOn ? 'showTextOn' : 'showTextOff'}>DSC</p>
 
-      <button onClick={handlerButton} value='ALF'>
-        ALF
-      </button>
-      <button onClick={handlerButton} value='Attack'>
-        Attack
-      </button>
-      <input type='text' placeholder='Ingrese el Pokemon.' />
-      <button>Search</button>
+      <div className='selectContainer'>
+        <select onChange={handleSelect}>
+          <option>ALF</option>
+          <option>Attack</option>
+        </select>
+      </div>
+
+      <div className='searchContainer' >
+        <input type='text' placeholder='Ingrese el Pokemon.' />
+        <button>Search</button>
+      </div>
     </div>
   );
 };
