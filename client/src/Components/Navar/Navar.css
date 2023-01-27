@@ -1,0 +1,31 @@
+.containerNavar {
+  position: fixed;
+  top: 40%;
+  left: 20px;
+  height: 100px;
+  width: 80px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0);
+  box-shadow: 0px 4px 13px 5px rgba(0, 0, 0, 0.766);
+  backdrop-filter: blur(2px);
+}
+
+.containerNavar img {
+  width: 45px;
+  height: 40px;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.containerNavar img:hover {
+  transform: scale(1.4);
+  filter: invert(100%);
+  border-radius: 10px;
+}

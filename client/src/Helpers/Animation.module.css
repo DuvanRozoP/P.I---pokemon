@@ -1,0 +1,50 @@
+.animationMoveLeftToRight {
+  animation: alternate moveLeftToRight 1s;
+}
+
+.animationMoveLeftToLeft {
+  animation: alternate moveLeftToLeft 1s;
+}
+
+.animationAcordeon {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  background-color: aqua;
+  overflow-y: hidden;
+  transition: all 500ms;
+  animation: alternate infinite acordeon 1s;
+}
+
+@keyframes moveLeftToRight {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: 0px;
+    opacity: 1;
+  }
+}
+
+@keyframes moveLeftToLeft {
+  0% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: 0px;
+    opacity: 1;
+  }
+}
+
+@keyframes acordeon {
+  0% {
+    height: 10px;
+  }
+  100% {
+    height: calc(var(--content-height) + 10px);
+  }
+}

@@ -1,0 +1,46 @@
+.cardPokemon {
+  width: 300px;
+  height: 285px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: linear-gradient(360deg, #ffcd02 -6.44%, rgba(255, 205, 2, 0) 56%);
+  filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.52));
+  transition: all 200ms;
+}
+
+.cardPokemon h1 {
+  font-family: Poppins-Medium;
+}
+
+.containerTypes p {
+  font-family: Poppins-Light;
+}
+
+.cardPokemon h1,
+.containerTypes p {
+  color: rgb(0, 0, 0);
+}
+
+.cardPokemon img {
+  width: 200px;
+  position: relative;
+  transition: all 200ms;
+}
+
+.containerTypes {
+  display: flex;
+  gap: 15px;
+}
+
+.cardPokemon:hover {
+  transform: scale(1.1);
+}
+
+.cardPokemon:hover img {
+  transform: translateY(-15px);
+}
