@@ -28,9 +28,11 @@
 
 .cardPokemon img {
   width: 200px;
+  height: 200px;
   position: relative;
   transition: all 200ms;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .containerTypes {

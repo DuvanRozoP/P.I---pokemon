@@ -17,10 +17,21 @@ const request = axios.create({
 export const getPokemons = () => {
   return async function (dispatch) {
     try {
-      const pokemons = await request.get('/pokemons');
+      const pokemonsApi = await request.get('/pokemons');
+      const pokemonsDb = pokemonsApi.data.succes.db.map(
+        ({ id, stats, sprites, name, tagTypes }) => ({
+          id: `S${id}`,
+          name,
+          attack: stats.attack,
+          types: tagTypes,
+          image: sprites,
+        })
+      );
+      const pokemonsAll = [...pokemonsDb, ...pokemonsApi.data.succes.api];
+      console.log('💻 -> pokemonsAll', pokemonsAll);
       return dispatch({
         type: GET_POKEMONSALL,
-        payload: pokemons.data.succes,
+        payload: pokemonsAll,
       });
     } catch (error) {
       return dispatch({
@@ -48,7 +59,6 @@ export const getPokemonsDetail = (id) => {
 export const getPokemonByName = (name) => {
   return async function (dispatch) {
     try {
-      console.log('💻 -> pokemon -> entro');
       const pokemon = await request.get(`/pokemons?name=${name}`);
       return dispatch({
         type: GET_POKEMON,
@@ -62,7 +72,7 @@ export const getPokemonByName = (name) => {
 
 export const alfPokemons = (isOn) => {
   const { pokemons } = store.getState();
-  const array = [...pokemons.api];
+  const array = [...pokemons];
 
   if (isOn) {
     const orderByAsc = array.sort((a, b) => {
@@ -85,7 +95,7 @@ export const alfPokemons = (isOn) => {
 
 export const attackPokemons = (isOn) => {
   const { pokemons } = store.getState();
-  const array = [...pokemons.api];
+  const array = [...pokemons];
 
   if (isOn) {
     const orderByAsc = array.sort((a, b) => b.attack - a.attack);

@@ -29,7 +29,6 @@ const Detail = () => {
   const detail = useSelector((state) => state.detail);
 
   useEffect(() => {
-    console.log('hola pokemonId');
     dispatch(getPokemonsDetail(pokemonId));
   }, [dispatch, pokemonId]);
 
@@ -47,7 +46,6 @@ const Detail = () => {
       });
       setIsLoading(false);
     }
-    console.log('💻 -> Detail -> state', detail);
   }, [detail]);
 
   if (isLoading) return <Loading />;

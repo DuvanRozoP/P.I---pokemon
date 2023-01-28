@@ -24,7 +24,7 @@ const Landing = () => {
     console.log('💻 -> Landing -> pokemon', pokemon);
 
     if (Object.values(pokemon).length > 0) updateRender([pokemon]);
-    else if (pokemons.api?.length > 0 || pokemons.db?.length > 0) setIsLoading(false);
+    else if (pokemons?.length > 0 ) setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pokemons, pokemon]);
 
