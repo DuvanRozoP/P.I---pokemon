@@ -4,6 +4,7 @@ import {
   GET_DES_POKEMON,
   GET_POKEMON,
   GET_DETAIL,
+  GET_TYPES,
 } from './types.js';
 // , POST_POKEMONS, GET_DETAIL, GET_POKEMON
 import store from '../store/index.js';
@@ -28,7 +29,6 @@ export const getPokemons = () => {
         })
       );
       const pokemonsAll = [...pokemonsDb, ...pokemonsApi.data.succes.api];
-      console.log('💻 -> pokemonsAll', pokemonsAll);
       return dispatch({
         type: GET_POKEMONSALL,
         payload: pokemonsAll,
@@ -38,6 +38,20 @@ export const getPokemons = () => {
         type: GET_POKEMONSALL,
         payload: [],
       });
+    }
+  };
+};
+
+export const getTypesPokemons = () => {
+  return async function (dispatch) {
+    try {
+      const types = await request.get('/types');
+      return dispatch({
+        type: GET_TYPES,
+        payload: types.data.succes,
+      });
+    } catch (error) {
+      console.log(error.message);
     }
   };
 };

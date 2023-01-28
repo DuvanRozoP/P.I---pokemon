@@ -5,6 +5,7 @@ import {
   GET_DES_POKEMON,
   GET_POKEMON,
   GET_DETAIL,
+  GET_TYPES,
 } from '../actions/types';
 
 // *estado global
@@ -13,6 +14,7 @@ const initialState = {
   filters: [],
   pokemon: {},
   detail: {},
+  types: [],
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -41,6 +43,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         detail: payload,
+      };
+    case GET_TYPES:
+      return {
+        ...state,
+        types: payload,
       };
     default:
       return {

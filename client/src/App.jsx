@@ -4,6 +4,7 @@ import './App.css';
 import Presentation from './Pages/Presentation/Presentation';
 import Landing from './Pages/Landing/Landing';
 import Detail from './Pages/Detail/Detail';
+import Create from './Pages/Create/Create';
 
 // & Components
 import Navar from './Components/Navar/Navar';
@@ -14,12 +15,13 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 // ^Actions
-import { getPokemons } from './Redux/actions/actions';
+import { getPokemons, getTypesPokemons } from './Redux/actions/actions';
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPokemons(dispatch));
+    dispatch(getTypesPokemons(dispatch));
   }, [dispatch]);
 
   return (
@@ -27,6 +29,7 @@ function App() {
       <Navar />
       <Routes>
         <Route path='/detail/:pokemonId' element={<Detail />} />
+        <Route path='/create' element={<Create />} />
         <Route path='/home' element={<Landing />} />
         <Route exact path='/' element={<Presentation />} />
       </Routes>

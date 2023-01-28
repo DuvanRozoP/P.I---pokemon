@@ -21,8 +21,6 @@ const Landing = () => {
   };
 
   useEffect(() => {
-    console.log('💻 -> Landing -> pokemon', pokemon);
-
     if (Object.values(pokemon).length > 0) updateRender([pokemon]);
     else if (pokemons?.length > 0 ) setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
