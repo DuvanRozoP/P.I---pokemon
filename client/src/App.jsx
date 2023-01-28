@@ -3,6 +3,7 @@ import './App.css';
 // ~ Pages
 import Presentation from './Pages/Presentation/Presentation';
 import Landing from './Pages/Landing/Landing';
+import Detail from './Pages/Detail/Detail';
 
 // & Components
 import Navar from './Components/Navar/Navar';
@@ -25,6 +26,7 @@ function App() {
     <>
       <Navar />
       <Routes>
+        <Route path='/detail/:pokemonId' element={<Detail />} />
         <Route path='/home' element={<Landing />} />
         <Route exact path='/' element={<Presentation />} />
       </Routes>

@@ -1,5 +1,11 @@
 // !importar types acitons
-import { GET_POKEMONSALL, GET_ASD_POKEMON, GET_DES_POKEMON, GET_POKEMON } from '../actions/types';
+import {
+  GET_POKEMONSALL,
+  GET_ASD_POKEMON,
+  GET_DES_POKEMON,
+  GET_POKEMON,
+  GET_DETAIL,
+} from '../actions/types';
 
 // *estado global
 const initialState = {
@@ -30,6 +36,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         pokemon: payload,
+      };
+    case GET_DETAIL:
+      return {
+        ...state,
+        detail: payload,
       };
     default:
       return {

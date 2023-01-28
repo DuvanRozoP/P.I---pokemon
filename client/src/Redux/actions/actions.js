@@ -1,4 +1,10 @@
-import { GET_POKEMONSALL, GET_ASD_POKEMON, GET_DES_POKEMON, GET_POKEMON } from './types.js';
+import {
+  GET_POKEMONSALL,
+  GET_ASD_POKEMON,
+  GET_DES_POKEMON,
+  GET_POKEMON,
+  GET_DETAIL,
+} from './types.js';
 // , POST_POKEMONS, GET_DETAIL, GET_POKEMON
 import store from '../store/index.js';
 
@@ -21,6 +27,20 @@ export const getPokemons = () => {
         type: GET_POKEMONSALL,
         payload: [],
       });
+    }
+  };
+};
+
+export const getPokemonsDetail = (id) => {
+  return async function (dispatch) {
+    try {
+      const pokemons = await request.get(`/pokemons/${id}`);
+      return dispatch({
+        type: GET_DETAIL,
+        payload: pokemons.data.succes,
+      });
+    } catch (error) {
+      console.log(error.message);
     }
   };
 };
