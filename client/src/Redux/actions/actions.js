@@ -1,4 +1,4 @@
-import { GET_POKEMONSALL, GET_ASD_POKEMON, GET_DES_POKEMON } from './types.js';
+import { GET_POKEMONSALL, GET_ASD_POKEMON, GET_DES_POKEMON, GET_POKEMON } from './types.js';
 // , POST_POKEMONS, GET_DETAIL, GET_POKEMON
 import store from '../store/index.js';
 
@@ -21,6 +21,21 @@ export const getPokemons = () => {
         type: GET_POKEMONSALL,
         payload: [],
       });
+    }
+  };
+};
+
+export const getPokemonByName = (name) => {
+  return async function (dispatch) {
+    try {
+      console.log('💻 -> pokemon -> entro');
+      const pokemon = await request.get(`/pokemons?name=${name}`);
+      return dispatch({
+        type: GET_POKEMON,
+        payload: pokemon.data.succes,
+      });
+    } catch (error) {
+      console.log(error.message);
     }
   };
 };

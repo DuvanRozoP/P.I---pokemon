@@ -1,6 +1,6 @@
 import './Search.css';
 // &Actions
-import { alfPokemons, attackPokemons } from '../../Redux/actions/actions';
+import { alfPokemons, attackPokemons, getPokemonByName } from '../../Redux/actions/actions';
 
 // ~Hooks
 import { useDispatch } from 'react-redux';
@@ -10,6 +10,7 @@ const Search = () => {
   const dispatch = useDispatch();
   const [isOn, setIsOn] = useState(true);
   const [events, setEvents] = useState('ALF');
+  const [search, setSearch] = useState('');
 
   const handleChange = () => setIsOn(!isOn);
   const handleEvents = () => {
@@ -19,14 +20,19 @@ const Search = () => {
   const handleSelect = (event) => {
     setEvents(String(event.target.value));
   };
+  const handleSearch = (event) => {
+    setSearch(event.target.value);
+  };
+  const findPokemon = () => {
+    dispatch(getPokemonByName(search));
+  };
   useEffect(() => {
     handleEvents();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOn,events]);
+  }, [isOn, events]);
 
   return (
     <div className='containerSearch'>
-
       <p className={isOn ? 'showTextOn' : 'showTextOff'}>ASD</p>
       <label>
         <input id='check' type='checkbox' checked={isOn} onChange={handleChange} />
@@ -41,9 +47,14 @@ const Search = () => {
         </select>
       </div>
 
-      <div className='searchContainer' >
-        <input type='text' placeholder='Ingrese el Pokemon.' />
-        <button>Search</button>
+      <div className='searchContainer'>
+        <input
+          value={search}
+          onChange={handleSearch}
+          type='text'
+          placeholder='Ingrese el Pokemon.'
+        />
+        <button onClick={findPokemon}>Search</button>
       </div>
     </div>
   );

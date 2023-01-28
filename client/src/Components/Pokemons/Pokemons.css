@@ -1,5 +1,6 @@
 .containerPokemons {
   width: 80%;
+  min-height: 100vh;
   padding-top: 10px;
   padding-bottom: 50px;
   border-radius: 10px;
