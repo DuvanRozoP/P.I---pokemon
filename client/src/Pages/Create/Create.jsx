@@ -19,7 +19,7 @@ const Create = () => {
     attack: '',
     defense: '',
     speed: '',
-    typesPoke: [],
+    tagTypes: [],
   });
 
   useEffect(() => {
@@ -36,113 +36,131 @@ const Create = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const { name, height, weight, sprites, healt, attack, defense, speed, tagTypes } = inputs;
+    const newPokemon = {
+      name,
+      tagTypes,
+      stats: { healt, attack, defense, speed },
+      sprites,
+      height,
+      weight,
+    };
+    console.log('💻 -> handleSubmit -> newPokemon', newPokemon);
   };
 
   const handleTypes = (event) => {
     const newValue = event.target.value;
-    if (!inputs.typesPoke.includes(newValue)) {
+    if (!inputs.tagTypes.includes(newValue)) {
       setInputs((prevInputs) => {
         return {
           ...prevInputs,
-          typesPoke: [...prevInputs.typesPoke, newValue],
+          tagTypes: [...prevInputs.tagTypes, newValue],
         };
       });
     }
+    console.log('💻 -> Create -> inputs', inputs);
   };
 
   if (isLoading) return <Loading />;
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>Nombre:</label>
-      <input
-        name='name'
-        value={inputs.name}
-        onChange={handleChangeInput}
-        placeholder='Escribe el nombre.'
-        type='text'
-      />
+    <section className='containerForm'>
+      <form onSubmit={handleSubmit}>
+        <div className='containerPart1'>
+          <h1> Crea tu nuevo Pokemon </h1>
 
-      <label>Altura:</label>
-      <input
-        name='height'
-        value={inputs.height}
-        onChange={handleChangeInput}
-        placeholder='Escribe el Altura.'
-        type='number'
-      />
+          <label>Nombre:</label>
+          <input
+            name='name'
+            value={inputs.name}
+            onChange={handleChangeInput}
+            placeholder='Escribe el nombre.'
+            type='text'
+          />
 
-      <label>Peso:</label>
-      <input
-        name='weight'
-        value={inputs.weight}
-        onChange={handleChangeInput}
-        placeholder='Escribe el Peso.'
-        type='number'
-      />
+          <label>Altura:</label>
+          <input
+            name='height'
+            value={inputs.height}
+            onChange={handleChangeInput}
+            placeholder='Escribe el Altura.'
+            type='number'
+          />
 
-      <label>Imagen:</label>
-      <input
-        name='sprites'
-        value={inputs.sprites}
-        onChange={handleChangeInput}
-        placeholder='Escribe la url de la imagen.'
-        type='text'
-      />
+          <label>Peso:</label>
+          <input
+            name='weight'
+            value={inputs.weight}
+            onChange={handleChangeInput}
+            placeholder='Escribe el Peso.'
+            type='number'
+          />
 
-      <label>Vida:</label>
-      <input
-        name='healt'
-        value={inputs.healt}
-        onChange={handleChangeInput}
-        placeholder='Escribe la url de la imagen.'
-        type='number'
-      />
+          <label>Imagen:</label>
+          <input
+            name='sprites'
+            value={inputs.sprites}
+            onChange={handleChangeInput}
+            placeholder='Escribe la url de la imagen.'
+            type='text'
+          />
 
-      <label>Ataque:</label>
-      <input
-        name='attack'
-        value={inputs.attack}
-        onChange={handleChangeInput}
-        placeholder='Escribe la url de la imagen.'
-        type='number'
-      />
+          <label>Vida:</label>
+          <input
+            name='healt'
+            value={inputs.healt}
+            onChange={handleChangeInput}
+            placeholder='Escribe la vide del pokemon.'
+            type='number'
+          />
 
-      <label>Defense:</label>
-      <input
-        name='defense'
-        value={inputs.defense}
-        onChange={handleChangeInput}
-        placeholder='Escribe la url de la imagen.'
-        type='number'
-      />
+          <label>Ataque:</label>
+          <input
+            name='attack'
+            value={inputs.attack}
+            onChange={handleChangeInput}
+            placeholder='Escribe el ataque del pokemon.'
+            type='number'
+          />
 
-      <label>Velocidad:</label>
-      <input
-        name='speed'
-        value={inputs.speed}
-        onChange={handleChangeInput}
-        placeholder='Escribe la url de la imagen.'
-        type='number'
-      />
+          <label>Defense:</label>
+          <input
+            name='defense'
+            value={inputs.defense}
+            onChange={handleChangeInput}
+            placeholder='Escribe la defensa del pokemon.'
+            type='number'
+          />
 
-      <div className='containerTypes'>
-        <div className='optines'>
-          {typesPokemon.map(({ name, id }, index) => (
-            <button onClick={handleTypes} value={name} key={index}>
-              {name}
-            </button>
-          ))}
+          <label>Velocidad:</label>
+          <input
+            name='speed'
+            value={inputs.speed}
+            onChange={handleChangeInput}
+            placeholder='Escribe la velocidad del pokemon.'
+            type='number'
+          />
         </div>
-        <div className='selecciones'>
-          {inputs.typesPoke.map((element, index) => (
-            <p key={index}>{element}</p>
-          ))}
-        </div>
-      </div>
 
-      <button type='submit'>Enviar</button>
-    </form>
+        <div className='containerPart2'>
+          <div className='containerTypes'>
+            <select className='optines' onChange={handleTypes}>
+              {typesPokemon.map(({ name, id }, index) => (
+                <option onClick={handleTypes} value={name} key={index}>
+                  {name}
+                </option>
+              ))}
+            </select>
+            <div className='selecciones'>
+              {inputs.tagTypes.map((element, index) => (
+                <p key={index}>{element}</p>
+              ))}
+            </div>
+          </div>
+          <button type='submit'>Enviar</button>
+        </div>
+      </form>
+    </section>
   );
 };
 
