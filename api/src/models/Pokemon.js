@@ -23,17 +23,15 @@ module.exports = (sequelize) => {
         allowNull: false,
         unique: true,
       },
-      life: {
-        type: DataTypes.INTEGER,
+      sprites: {
+        type: DataTypes.STRING,
       },
-      attack: {
-        type: DataTypes.INTEGER,
+      tagTypes: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+        field: 'pokemonTypes'
       },
-      defense: {
-        type: DataTypes.INTEGER,
-      },
-      speed: {
-        type: DataTypes.INTEGER,
+      stats: {
+        type: DataTypes.JSON,
       },
       height: {
         type: DataTypes.FLOAT,

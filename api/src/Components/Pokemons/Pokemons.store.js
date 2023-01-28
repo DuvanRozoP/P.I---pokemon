@@ -2,31 +2,21 @@ const { Pokemon, Type } = require('../../db');
 const axios = require('axios');
 
 // ~--> POST.
-exports.createPokemonStore = async ({
-  name,
-  nameType,
-  life,
-  attack,
-  defense,
-  speed,
-  height,
-  weight,
-}) => {
+exports.createPokemonStore = async ({ name, sprites, tagTypes, stats, height, weight }) => {
   try {
     const [newPokemon, created] = await Pokemon.findOrCreate({
       where: { name },
       defaults: {
         name,
-        life,
-        attack,
-        defense,
-        speed,
+        sprites,
+        tagTypes,
+        stats,
         height,
         weight,
       },
     });
     if (created)
-      nameType.forEach(async (element) => {
+      tagTypes.forEach(async (element) => {
         const typeExist = await Type.findOrCreate({ where: { name: element } });
         newPokemon.addType(typeExist[0]);
       });
@@ -38,10 +28,25 @@ exports.createPokemonStore = async ({
   }
 };
 // &--> Get by id for api or database.
-exports.getPokemonByIdStore = async (id) => {
+exports.getPokemonByIdStore = async (idPokemon) => {
   try {
-    const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${Number(id)}`);
-    return data;
+    const { data } = await axios.get(`https://pokeapi.co/api/v2/pokemon/${Number(idPokemon)}`);
+    const { name, sprites, types, id, stats, height, weight } = data;
+    const pokemonFind = {
+      id,
+      name,
+      height,
+      weight,
+      tagTypes: types.map((type) => type.type.name),
+      stats: {
+        healt: stats[0].base_stat,
+        attack: stats[1].base_stat,
+        defense: stats[2].base_stat,
+        speed: stats[5].base_stat,
+      },
+      sprites: sprites.other.home.front_default,
+    };
+    return pokemonFind;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -55,10 +60,9 @@ exports.getPokemonsByIdDbStore = async (id) => {
     throw new Error(error.message);
   }
 };
+
 // *--> Get all.
-
 let allPokemons = [];
-
 exports.getPokemonAllStore = async () => {
   try {
     const getAllDatabase = await Pokemon.findAll();
@@ -82,7 +86,6 @@ exports.getPokemonAllStore = async () => {
     throw new Error(error.message);
   }
 };
-
 function getAllPokemons(url) {
   return axios
     .get(url)
@@ -97,7 +100,6 @@ function getAllPokemons(url) {
       throw new Error(error.message);
     });
 }
-
 function getPokemonInfo(name) {
   return axios
     .get(`https://pokeapi.co/api/v2/pokemon/${name}`)

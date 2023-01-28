@@ -17,8 +17,6 @@ const getPokemonAll = async (name) => {
   }
 };
 
-
-
 const getPokemonById = async (id) => {
   try {
     isEmpty(id);
@@ -34,9 +32,9 @@ const getPokemonById = async (id) => {
 
 const postPokemonDb = async (data) => {
   try {
-    const { name, nameType, life, attack, defense, speed, height, weight } = data;
-    isEmpty(name, nameType);
-    isNumber(life, attack, defense, speed, height, weight);
+    const { name, sprites, tagTypes, stats, height, weight } = data;
+    isEmpty(name, sprites, tagTypes, stats, height, weight);
+    isNumber(stats.healt, stats.attack, stats.defense, stats.speed, height, weight);
 
     const pokemon = await createPokemonStore(data);
     return `the pokemon ${pokemon.name} has been created successfully`;

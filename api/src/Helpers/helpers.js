@@ -25,7 +25,7 @@ exports.error = (res, status, error) => {
 
 // ^validar datos
 exports.isEmpty = (...args) => {
-  for (const arg of args) if (!arg) throw new Error(`${arg} Invali Data.`);
+  for (const arg of args) if (!arg) throw new Error(`${arg} - " ${args} " Invali Data.`);
 };
 
 exports.isNumber = (...args) => {
