@@ -7,28 +7,25 @@ import { useEffect, useState } from 'react';
 import Loading from '../../Components/Loading/Loading';
 
 const Pokemons = ({ arrayPokemons }) => {
-  const [state, setState] = useState({
-    isLoading: true,
-  });
-  useEffect(() => {
-    if (arrayPokemons?.length > 0) setState({ isLoading: false });
-  }, [arrayPokemons, setState]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (state.isLoading) return <Loading />;
+  useEffect(() => {
+    if (arrayPokemons?.length > 0) setIsLoading(false);
+  }, [arrayPokemons]);
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className='containerPokemons'>
-      {arrayPokemons.map((pokemon, index) => {
-        return (
-          <Pokemon
-            key={index}
-            detail={pokemon.id}
-            name={pokemon.name}
-            img={pokemon.image}
-            type={pokemon.types}
-          />
-        );
-      })}
+      {arrayPokemons.map((pokemon, index) => (
+        <Pokemon
+          key={pokemon.id}
+          detail={pokemon.id}
+          name={pokemon.name}
+          img={pokemon.image}
+          type={pokemon.types}
+        />
+      ))}
     </div>
   );
 };

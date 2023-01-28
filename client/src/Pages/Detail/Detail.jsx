@@ -59,9 +59,9 @@ const Detail = () => {
           <img src={state.sprites} alt={state.name} />
           <h1>{state.name}</h1>
           <div className='typesCard'>
-          <h4>Tipo: </h4>
-            {state.tagTypes.map((type) => (
-              <p>{type}</p>
+            <h4>Tipo: </h4>
+            {state.tagTypes.map((type, index) => (
+              <p key={index}>{type}</p>
             ))}
           </div>
         </div>

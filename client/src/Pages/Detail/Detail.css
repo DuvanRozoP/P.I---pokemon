@@ -102,13 +102,13 @@
 #poke1 {
   left: 5%;
   top: 5%;
-  animation: alternate infinite animation 5s ease;
+  animation: alternate infinite animation 4s ease;
 }
 
 #poke2 {
   left: 85%;
   top: 80%;
-  animation: alternate infinite animation2 5s ease;
+  animation: alternate infinite animation2 4s ease;
 }
 
 @keyframes animation {

@@ -1,13 +1,17 @@
 import './Pokemon.css';
 
-const Pokemon = ({ name, img, type }) => {
+import { Link } from 'react-router-dom';
+
+const Pokemon = ({ detail, name, img, type }) => {
   return (
     <div className='cardPokemon'>
-      <img src={img} alt={name} />
+      <Link to={`/detail/${detail}`}>
+        <img src={img} alt={name} />
+      </Link>
       <h1>{name}</h1>
       <div className='containerTypes'>
-        {type.map((element) => (
-          <p>{element}</p>
+        {type.map((element, index) => (
+          <p key={index}>{element}</p>
         ))}
       </div>
     </div>
