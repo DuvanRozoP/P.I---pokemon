@@ -24,7 +24,7 @@ const { conn } = require('./src/db.js');
 const { addTypesDataBase } = require('./src/Helpers/helpers.js');
 
 // Syncing all the models at once. force - alter
-conn.sync({ force: true }).then(() => {
+conn.sync({ alter: true }).then(() => {
   server.listen(3001, () => {
     // Ingresando datos a la tabla Types
     addTypesDataBase();

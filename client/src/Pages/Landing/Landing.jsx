@@ -15,14 +15,18 @@ const Landing = () => {
   const [render, setRender] = useState([]);
   const pokemons = useSelector((state) => state.pokemons);
   const pokemon = useSelector((state) => state.pokemon);
-
   const updateRender = (newRender) => {
     setRender(newRender);
   };
 
   useEffect(() => {
-    if (Object.values(pokemon).length > 0) updateRender([pokemon]);
-    else if (pokemons?.length > 0 ) setIsLoading(false);
+    if (Object.values(pokemon).length > 0) {
+      updateRender([pokemon]);
+      setIsLoading(false);
+    } else if (pokemons?.length > 0) {
+      updateRender(pokemons);
+      setIsLoading(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pokemons, pokemon]);
 
@@ -30,9 +34,9 @@ const Landing = () => {
 
   return (
     <div className='containerLanding'>
-      <Search />
+      <Search arrayPokemons={pokemons} setRender={updateRender} />
       <Pokemons arrayPokemons={render} />
-      <Pagination setRender={updateRender} />
+      {!Object.values(pokemon).length > 0 ? <Pagination setRender={updateRender} /> : ''}
     </div>
   );
 };

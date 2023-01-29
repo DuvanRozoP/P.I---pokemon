@@ -19,7 +19,7 @@ const Pokemons = ({ arrayPokemons }) => {
     <div className='containerPokemons'>
       {arrayPokemons.map((pokemon, index) => (
         <Pokemon
-          key={pokemon.id}
+          key={index}
           detail={pokemon.id}
           name={pokemon.name}
           img={pokemon.image}

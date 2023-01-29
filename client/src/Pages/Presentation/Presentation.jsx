@@ -17,15 +17,3 @@ const Presentation = () => {
 };
 
 export default Presentation;
-
-/*
-
-${styled.animationMoveLeftToRight}
-${styled.animationMoveLeftToLeft}
-
-<div className='containerPresentation'>
-      <div className='containerImgs'></div>
-      <div className={`containerTitle ${styled.animationMoveLeftToRight}`}></div>
-    </div>
-
-*/

@@ -15,7 +15,7 @@ const getPokemonAll = async (name) => {
   } catch (error) {
     throw new Error(error.message);
   }
-};
+}; 
 
 const getPokemonById = async (id) => {
   try {

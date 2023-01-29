@@ -17,12 +17,12 @@
   font-family: Poppins-Medium;
 }
 
-.containerTypes p {
+.containerTypesP p {
   font-family: Poppins-Light;
 }
 
 .cardPokemon h1,
-.containerTypes p {
+.containerTypesP p {
   color: rgb(0, 0, 0);
 }
 
@@ -35,7 +35,7 @@
   border-radius: 10px;
 }
 
-.containerTypes {
+.containerTypesP {
   display: flex;
   gap: 15px;
 }

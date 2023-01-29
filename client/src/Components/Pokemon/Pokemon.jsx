@@ -9,7 +9,7 @@ const Pokemon = ({ detail, name, img, type }) => {
         <img src={img} alt={name} />
       </Link>
       <h1>{name}</h1>
-      <div className='containerTypes'>
+      <div className='containerTypesP'>
         {type.map((element, index) => (
           <p key={index}>{element}</p>
         ))}

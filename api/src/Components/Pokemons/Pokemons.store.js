@@ -122,9 +122,19 @@ function getPokemonInfo(name) {
 // ^--> Get by name for database.
 exports.getPokemonByParamsStore = async (name) => {
   try {
-    console.log('💻 -> exports.getPokemonByParamsStore= -> name', name);
     const getByParams = await Pokemon.findOne({ where: { name } });
-    if (getByParams !== null) return getByParams;
+
+    if (getByParams !== null) {
+      const { id, stats, tagTypes, sprites } = getByParams.dataValues;
+      const pokemonDb = {
+        id,
+        name,
+        attack: stats.attack,
+        image: sprites,
+        types: tagTypes,
+      };
+      return pokemonDb;
+    }
 
     const data = await axios
       .get(`https://pokeapi.co/api/v2/pokemon/${name}`)
@@ -143,7 +153,6 @@ exports.getPokemonByParamsStore = async (name) => {
         throw new Error(`Pokemon '${name}' not found.`);
       });
 
-    console.log('💻 -> exports.getPokemonByParamsStore= -> data', data);
     return data;
   } catch (error) {
     throw new Error(error.message);
