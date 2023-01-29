@@ -10,10 +10,11 @@ import {
 import store from '../store/index.js';
 
 import axios from 'axios';
-const request = axios.create({
+export const request = axios.create({
   baseURL: 'http://localhost:3001',
   withCredentials: true,
 });
+
 
 export const getPokemons = () => {
   return async function (dispatch) {

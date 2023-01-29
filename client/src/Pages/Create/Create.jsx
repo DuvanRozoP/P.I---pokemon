@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux';
 // & Component
 import Loading from '../../Components/Loading/Loading';
 
+import { request } from '../../Redux/actions/actions';
+
 const Create = () => {
   const typesPokemon = useSelector((state) => state.types);
   const [isLoading, setIsLoading] = useState(true);
@@ -27,25 +29,28 @@ const Create = () => {
   }, [typesPokemon]);
 
   const handleChangeInput = (event) => {
-    console.log(inputs);
-    setInputs({
-      ...inputs,
-      [event.target.name]: event.target.value,
-    });
+    setInputs({ ...inputs, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const { name, height, weight, sprites, healt, attack, defense, speed, tagTypes } = inputs;
     const newPokemon = {
       name,
       tagTypes,
-      stats: { healt, attack, defense, speed },
+      stats: {
+        healt: Number(healt),
+        attack: Number(attack),
+        defense: Number(defense),
+        speed: Number(speed),
+      },
       sprites,
-      height,
-      weight,
+      height: Number(height),
+      weight: Number(weight),
     };
-    console.log('💻 -> handleSubmit -> newPokemon', newPokemon);
+
+    const createPokemon = await request.post('/pokemons', newPokemon);
+    alert(createPokemon.data.succes);
   };
 
   const handleTypes = (event) => {
