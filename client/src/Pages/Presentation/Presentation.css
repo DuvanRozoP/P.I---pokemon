@@ -1,14 +1,13 @@
 .containerPresentation {
   width: 100%;
   height: 100vh;
-  background-color: aqua;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   align-content: center;
   justify-content: center;
   align-items: center;
-  background-image: url('../../assets/image\ 1.jpg');
+  background-image: url(../../assets/image1.png);
   background-size: cover;
 }
 

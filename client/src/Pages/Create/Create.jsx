@@ -6,8 +6,10 @@ import { useSelector } from 'react-redux';
 
 // & Component
 import Loading from '../../Components/Loading/Loading';
-
 import validateInput from '../../Helpers/validation';
+
+// ~ actions
+import { request } from '../../Redux/actions/actions';
 
 const Create = () => {
   const typesPokemon = useSelector((state) => state.types);
@@ -67,8 +69,20 @@ const Create = () => {
         weight: Number(weight),
       };
 
-      //const createPokemon = await request.post('/pokemons', newPokemon);
-      //alert(createPokemon.data.succes);
+      const createPokemon = await request.post('/pokemons', newPokemon);
+      alert(createPokemon.data.succes);
+
+      setInputs({
+        name: '',
+        height: '',
+        weight: '',
+        sprites: '',
+        healt: '',
+        attack: '',
+        defense: '',
+        speed: '',
+        tagTypes: [],
+      });
     }
   };
 

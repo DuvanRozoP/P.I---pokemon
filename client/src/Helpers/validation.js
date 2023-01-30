@@ -30,7 +30,6 @@ const validateInput = (inputs) => {
   if (!onlyCaract.test(inputs.name)) erros = { ...erros, name: 'debe contener solo letras' };
   if (!imgsv2.test(inputs.sprites)) erros = { ...erros, sprites: 'debe ser una Url' };
 
-  console.log('💻 -> validateInput -> erros', erros);
   return erros;
 };
 
