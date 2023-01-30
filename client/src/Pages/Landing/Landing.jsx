@@ -13,22 +13,20 @@ import { useSelector } from 'react-redux';
 const Landing = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [render, setRender] = useState([]);
+
   const pokemons = useSelector((state) => state.pokemons);
   const pokemon = useSelector((state) => state.pokemon);
-  const updateRender = (newRender) => {
-    setRender(newRender);
-  };
+  const updateRender = (newRender) => setRender(newRender);
 
   useEffect(() => {
+    console.log('hola');
     if (Object.values(pokemon).length > 0) {
       updateRender([pokemon]);
       setIsLoading(false);
-    } else if (pokemons?.length > 0) {
-      updateRender(pokemons);
+    } else if (pokemons?.api?.length > 0) {
       setIsLoading(false);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pokemons, pokemon]);
+  }, [pokemons, pokemon, render]);
 
   if (isLoading) return <Loading />;
 

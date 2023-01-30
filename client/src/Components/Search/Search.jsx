@@ -1,6 +1,6 @@
 import './Search.css';
 // &Actions
-import { alfPokemons, attackPokemons, getPokemonByName } from '../../Redux/actions/actions';
+import { getPokemonByName, filterPokemon } from '../../Redux/actions/actions';
 
 // ~Hooks
 import { useDispatch } from 'react-redux';
@@ -9,18 +9,20 @@ import { useState, useEffect } from 'react';
 const Search = ({ arrayPokemons, setRender }) => {
   const dispatch = useDispatch();
   const [isOn, setIsOn] = useState(true);
-  const [events, setEvents] = useState('ALF');
+  const [events, setEvents] = useState('Api y Creados Por mi');
+  const [filter, setFilter] = useState('ALF');
   const [search, setSearch] = useState('');
 
+  const findPokemon = () => dispatch(getPokemonByName(search));
   const handleChange = () => setIsOn(!isOn);
+  const handlePokemonsALl = () => setRender(arrayPokemons);
+  
   const handleSelect = (event) => setEvents(String(event.target.value));
   const handleSearch = (event) => setSearch(event.target.value);
-  const handlePokemonsALl = () => setRender(arrayPokemons);
-  const findPokemon = () => dispatch(getPokemonByName(search));
+  const handleSelectFilter = (event) => setFilter(String(event.target.value));
 
   const handleEvents = () => {
-    if (events === 'ALF') dispatch(alfPokemons(isOn));
-    else if (events === 'Attack') dispatch(attackPokemons(isOn));
+    dispatch(filterPokemon(isOn, events, filter));
   };
 
   useEffect(() => {
@@ -42,9 +44,17 @@ const Search = ({ arrayPokemons, setRender }) => {
       <p className={!isOn ? 'showTextOn' : 'showTextOff'}>DSC</p>
 
       <div className='selectContainer'>
-        <select onChange={handleSelect}>
+        <select onChange={handleSelectFilter}>
           <option>ALF</option>
           <option>Attack</option>
+        </select>
+      </div>
+
+      <div className='selectContainer'>
+        <select onChange={handleSelect}>
+          <option>Api</option>
+          <option>Creados Por mi</option>
+          <option>Api y Creados Por mi</option>
         </select>
       </div>
 

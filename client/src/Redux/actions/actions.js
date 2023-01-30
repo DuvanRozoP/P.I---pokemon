@@ -1,12 +1,10 @@
 import {
   GET_POKEMONSALL,
-  GET_ASD_POKEMON,
-  GET_DES_POKEMON,
+  FILTERS_POKEMONS,
   GET_POKEMON,
   GET_DETAIL,
   GET_TYPES,
 } from './types.js';
-// , POST_POKEMONS, GET_DETAIL, GET_POKEMON
 import store from '../store/index.js';
 
 import axios from 'axios';
@@ -15,24 +13,13 @@ export const request = axios.create({
   withCredentials: true,
 });
 
-
 export const getPokemons = () => {
   return async function (dispatch) {
     try {
       const pokemonsApi = await request.get('/pokemons');
-      const pokemonsDb = pokemonsApi.data.succes.db.map(
-        ({ id, stats, sprites, name, tagTypes }) => ({
-          id: `S${id}`,
-          name,
-          attack: stats.attack,
-          types: tagTypes,
-          image: sprites,
-        })
-      );
-      const pokemonsAll = [...pokemonsDb, ...pokemonsApi.data.succes.api];
       return dispatch({
         type: GET_POKEMONSALL,
-        payload: pokemonsAll,
+        payload: pokemonsApi.data.succes,
       });
     } catch (error) {
       return dispatch({
@@ -85,38 +72,49 @@ export const getPokemonByName = (name) => {
   };
 };
 
-export const alfPokemons = (isOn) => {
-  const { pokemons } = store.getState();
-  const array = [...pokemons];
+export const filterPokemon = (isOn, events, filter) => {
+  return function (dispatch) {
+    const { pokemons } = store.getState();
+    const { api, db } = pokemons;
+    let array;
+    let orderArray;
+    let configSort;
+    switch (events) {
+      case 'Api':
+        array = [...api];
+        break;
+      case 'Creados Por mi':
+        array = [...db];
+        break;
+      case 'Api y Creados Por mi':
+        array = [...db, ...api];
+        break;
+      default:
+        console.log('nose que mierda llego', events);
+        break;
+    }
 
-  if (isOn) {
-    const orderByAsc = array.sort((a, b) => {
-      if (a.name > b.name) return 1;
-      if (a.name < b.name) return -1;
-      return 0;
+    if (filter === 'ALF') {
+      configSort = (a, b) => (isOn ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
+    } else {
+      configSort = (a, b) => (isOn ? b.attack - a.attack : a.attack - b.attack);
+    }
+
+    orderArray = array.sort(configSort);
+
+    return dispatch({
+      type: FILTERS_POKEMONS,
+      payload: orderArray,
     });
-
-    return { type: GET_ASD_POKEMON, payload: orderByAsc };
-  } else {
-    const orderByDsc = array.sort((a, b) => {
-      if (a.name > b.name) return -1;
-      if (a.name < b.name) return 1;
-      return 0;
-    });
-
-    return { type: GET_DES_POKEMON, payload: orderByDsc };
-  }
+  };
 };
 
-export const attackPokemons = (isOn) => {
-  const { pokemons } = store.getState();
-  const array = [...pokemons];
+/*
+const str1 = 'a';
+const str2 = 'b';
 
-  if (isOn) {
-    const orderByAsc = array.sort((a, b) => b.attack - a.attack);
-    return { type: GET_ASD_POKEMON, payload: orderByAsc };
-  } else {
-    const orderByDsc = array.sort((a, b) => a.attack - b.attack);
-    return { type: GET_DES_POKEMON, payload: orderByDsc };
-  }
-};
+console.log(str1.localeCompare(str2)); // -1 (str1 es menor que str2)
+console.log(str2.localeCompare(str1)); // 1 (str2 es mayor que str1)
+console.log(str1.localeCompare(str1)); // 0 (str1 es igual a str1)
+
+*/

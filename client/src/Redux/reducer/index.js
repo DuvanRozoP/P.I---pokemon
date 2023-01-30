@@ -1,8 +1,7 @@
 // !importar types acitons
 import {
   GET_POKEMONSALL,
-  GET_ASD_POKEMON,
-  GET_DES_POKEMON,
+  FILTERS_POKEMONS,
   GET_POKEMON,
   GET_DETAIL,
   GET_TYPES,
@@ -24,12 +23,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
         ...state,
         pokemons: payload,
       };
-    case GET_ASD_POKEMON:
-      return {
-        ...state,
-        filters: payload,
-      };
-    case GET_DES_POKEMON:
+    case FILTERS_POKEMONS: // ! aqui
       return {
         ...state,
         filters: payload,
