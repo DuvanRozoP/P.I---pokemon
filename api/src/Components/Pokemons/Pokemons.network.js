@@ -9,7 +9,7 @@ router.get('/', async (request, response) => {
     const { name } = request.query;
     succes(response, 200, await getPokemonAll(name));
   } catch (err) {
-    error(response, 410, err.message);
+    error(response, 400, err.message);
   }
 });
 
