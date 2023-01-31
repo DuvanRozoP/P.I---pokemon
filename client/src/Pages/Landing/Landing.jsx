@@ -30,6 +30,7 @@ const Landing = () => {
 
   if (isLoading) return <Loading />;
 
+  console.log('💻 -> Landing -> render', render);
   return (
     <div className='containerLanding'>
       <Search arrayPokemons={pokemons} setRender={updateRender} />

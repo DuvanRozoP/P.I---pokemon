@@ -27,6 +27,7 @@ exports.createPokemonStore = async ({ name, sprites, tagTypes, stats, height, we
     throw new Error(error.message);
   }
 };
+
 // &--> Get by id for api or database.
 exports.getPokemonByIdStore = async (idPokemon) => {
   try {
@@ -65,7 +66,15 @@ exports.getPokemonsByIdDbStore = async (id) => {
 let allPokemons = [];
 exports.getPokemonAllStore = async () => {
   try {
-    const getAllDatabase = await Pokemon.findAll();
+    const dataBase = await Pokemon.findAll();
+    const getAllDatabase = dataBase.map(({ id, name, sprites, tagTypes, stats }) => ({
+      id: 'S' + id,
+      name,
+      attack: stats.attack,
+      types: tagTypes,
+      image: sprites,
+    }));
+
     if (allPokemons.length >= 10)
       return {
         db: getAllDatabase,

@@ -16,7 +16,7 @@ const Search = ({ arrayPokemons, setRender }) => {
   const findPokemon = () => dispatch(getPokemonByName(search));
   const handleChange = () => setIsOn(!isOn);
   const handlePokemonsALl = () => setRender(arrayPokemons);
-  
+
   const handleSelect = (event) => setEvents(String(event.target.value));
   const handleSearch = (event) => setSearch(event.target.value);
   const handleSelectFilter = (event) => setFilter(String(event.target.value));

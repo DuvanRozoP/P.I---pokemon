@@ -2,16 +2,17 @@ import './Create.css';
 
 // * Hooks
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // & Component
 import Loading from '../../Components/Loading/Loading';
 import validateInput from '../../Helpers/validation';
 
 // ~ actions
-import { request } from '../../Redux/actions/actions';
+import { request, getPokemons } from '../../Redux/actions/actions';
 
 const Create = () => {
+  const dispatch = useDispatch();
   const typesPokemon = useSelector((state) => state.types);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -53,7 +54,6 @@ const Create = () => {
     if (Object.values(erros).length > 1) alert('no debes de tener errores en los campos');
     else if (inputs.tagTypes.length === 0) alert('debes de tener minimo un tipo para el pokemon');
     else {
-      console.log('creado correctamente');
       const { name, height, weight, sprites, healt, attack, defense, speed, tagTypes } = inputs;
       const newPokemon = {
         name,
@@ -70,7 +70,6 @@ const Create = () => {
       };
 
       const createPokemon = await request.post('/pokemons', newPokemon);
-      alert(createPokemon.data.succes);
 
       setInputs({
         name: '',
@@ -83,6 +82,9 @@ const Create = () => {
         speed: '',
         tagTypes: [],
       });
+
+      dispatch(getPokemons(dispatch));
+      alert(createPokemon.data.succes);
     }
   };
 

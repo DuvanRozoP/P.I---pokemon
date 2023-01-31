@@ -1,10 +1,4 @@
-import {
-  GET_POKEMONSALL,
-  FILTERS_POKEMONS,
-  GET_POKEMON,
-  GET_DETAIL,
-  GET_TYPES,
-} from './types.js';
+import { GET_POKEMONSALL, FILTERS_POKEMONS, GET_POKEMON, GET_DETAIL, GET_TYPES } from './types.js';
 import store from '../store/index.js';
 
 import axios from 'axios';
@@ -79,12 +73,13 @@ export const filterPokemon = (isOn, events, filter) => {
     let array;
     let orderArray;
     let configSort;
+
     switch (events) {
       case 'Api':
         array = [...api];
         break;
       case 'Creados Por mi':
-        array = [...db];
+        array = db.length > 0 ? [...db] : [];
         break;
       case 'Api y Creados Por mi':
         array = [...db, ...api];

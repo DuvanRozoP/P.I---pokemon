@@ -9,7 +9,6 @@ const { isEmpty, isNumber } = require('../../Helpers/helpers');
 
 const getPokemonAll = async (name) => {
   try {
-    //isEmpty(name);
     if (name) return await getPokemonByParamsStore(name);
     else return await getPokemonAllStore();
   } catch (error) {

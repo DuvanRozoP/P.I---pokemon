@@ -19,8 +19,3 @@ const Pokemon = ({ detail, name, img, type }) => {
 };
 
 export default Pokemon;
-/**
- * {type.map((element) => (
-          <p>{element}</p>
-        ))}
- */
