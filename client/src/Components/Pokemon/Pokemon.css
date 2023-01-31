@@ -45,5 +45,5 @@
 }
 
 .cardPokemon:hover img {
-  transform: translateY(-15px);
+  transform: translateY(-55px) scale(1.3);
 }
