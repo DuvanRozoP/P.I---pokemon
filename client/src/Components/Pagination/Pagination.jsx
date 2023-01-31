@@ -1,42 +1,36 @@
 import './Pagination.css';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updatePage } from '../../Redux/actions/actions';
 
-const Pagination = ({ setRender }) => {
-  const [page, setPage] = useState(0);
-  const stateGlobal = useSelector((state) => state.filters);
-  const handlerSlice = (array, start, end) => array.slice(start, end);
+const Pagination = ({ page }) => {
+  const dispatch = useDispatch();
+  const stateGlobalPage = useSelector((state) => state.page);
+  const filters = useSelector((state) => state.filters);
 
   useEffect(() => {
-    handlerRender(page);
+    if (stateGlobalPage !== page) handlerRender(page);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stateGlobal, page]);
+  }, [page]);
 
-  const handlerRender = (pageCurrent) => {
-    const start = pageCurrent * 12;
-    const end = start + 12;
-    setRender(handlerSlice(stateGlobal, start, end));
-  };
-
+  const handlerRender = (pageCurrent) => dispatch(updatePage(pageCurrent));
   const handlePageChange = (nextPage) => {
-    if (nextPage < stateGlobal?.length / 12 && nextPage >= 0) {
-      setPage(nextPage);
-    }
+    if (nextPage <= filters?.length - 1 && nextPage >= 0) handlerRender(nextPage);
   };
 
   return (
     <section className='containerPagination'>
       <button onClick={() => handlePageChange(page - 1)}> {'<'} </button>
       <button
-        className={page - 1 === -1 ? 'desactive' : ''}
         onClick={() => handlePageChange(page - 1)}
+        className={page - 1 === -1 ? 'desactive' : ''}
       >
         {page - 1}
       </button>
       <button onClick={() => handlePageChange(page)}> {page} </button>
       <button
-        className={page + 1 === stateGlobal?.length / 12 ? 'desactive' : ''}
         onClick={() => handlePageChange(page + 1)}
+        className={page + 1 === filters?.length ? 'desactive' : ''}
       >
         {page + 1}
       </button>

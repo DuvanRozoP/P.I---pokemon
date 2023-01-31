@@ -15,12 +15,15 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
 // ^Actions
-import { getPokemons, getTypesPokemons } from './Redux/actions/actions';
+import { getPokemons, getTypesPokemons, filterPokemon } from './Redux/actions/actions';
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getPokemons(dispatch));
+    dispatch(getPokemons(dispatch)).finally(() => {
+      dispatch(filterPokemon());
+      console.log('finalizo');
+    });
     dispatch(getTypesPokemons(dispatch));
   }, [dispatch]);
 

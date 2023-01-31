@@ -4,12 +4,16 @@ import './Pokemons.css';
 // &Components
 import Pokemon from '../../Components/Pokemon/Pokemon';
 
-const Pokemons = ({ arrayPokemons }) => {
+const Pokemons = ({ arrayPokemons, page }) => {
+  if (!arrayPokemons.length) return <div className='containerPokemons'></div>;
+
+  const pokemons = arrayPokemons.length === 1 ? [arrayPokemons[0]] : arrayPokemons[page];
+
   return (
     <div className='containerPokemons'>
-      {arrayPokemons.map((pokemon, index) => (
+      {pokemons.map((pokemon, index) => (
         <Pokemon
-          key={index}
+          key={pokemon.id || index}
           detail={pokemon.id}
           name={pokemon.name}
           img={pokemon.image}

@@ -4,31 +4,27 @@ import { getPokemonByName, filterPokemon } from '../../Redux/actions/actions';
 
 // ~Hooks
 import { useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
-const Search = ({ arrayPokemons, setRender }) => {
+const Search = ({ arrayPokemons }) => {
   const dispatch = useDispatch();
+  const inputRef = useRef(null);
+
   const [isOn, setIsOn] = useState(true);
   const [events, setEvents] = useState('Api y Creados Por mi');
   const [filter, setFilter] = useState('ALF');
-  const [search, setSearch] = useState('');
 
-  const findPokemon = () => dispatch(getPokemonByName(search));
+  const handlePokemonsALl = () => dispatch(filterPokemon());
+  const findPokemon = () => dispatch(getPokemonByName(inputRef.current.value));
+
   const handleChange = () => setIsOn(!isOn);
-  const handlePokemonsALl = () => setRender(arrayPokemons);
-
-  const handleSelect = (event) => setEvents(String(event.target.value));
-  const handleSearch = (event) => setSearch(event.target.value);
   const handleSelectFilter = (event) => setFilter(String(event.target.value));
-
-  const handleEvents = () => {
-    dispatch(filterPokemon(isOn, events, filter));
-  };
+  const handleSelect = (event) => setEvents(String(event.target.value));
 
   useEffect(() => {
-    handleEvents();
+    dispatch(filterPokemon(isOn, events, filter));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOn, events]);
+  }, [isOn, events, filter]);
 
   return (
     <div className='containerSearch'>
@@ -59,12 +55,7 @@ const Search = ({ arrayPokemons, setRender }) => {
       </div>
 
       <div className='searchContainer'>
-        <input
-          value={search}
-          onChange={handleSearch}
-          type='text'
-          placeholder='Ingrese el Pokemon.'
-        />
+        <input ref={inputRef} type='text' placeholder='Ingrese el Pokemon.' />
         <button onClick={findPokemon}>Search</button>
       </div>
     </div>
