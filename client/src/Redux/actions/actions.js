@@ -1,4 +1,12 @@
-import { GET_POKEMONSALL, FILTERS_POKEMONS, GET_POKEMON, GET_DETAIL, GET_TYPES } from './types.js';
+import {
+  GET_POKEMONSALL,
+  FILTERS_POKEMONS,
+  GET_POKEMON,
+  GET_DETAIL,
+  GET_TYPES,
+  UPDATE_PAGE,
+} from './types.js';
+
 import store from '../store/index.js';
 
 import axios from 'axios';
@@ -7,67 +15,55 @@ export const request = axios.create({
   withCredentials: true,
 });
 
-export const getPokemons = () => {
-  return async function (dispatch) {
-    try {
-      const pokemonsApi = await request.get('/pokemons');
-      return dispatch({
-        type: GET_POKEMONSALL,
-        payload: pokemonsApi.data.succes,
-      });
-    } catch (error) {
-      return dispatch({
-        type: GET_POKEMONSALL,
-        payload: [],
-      });
-    }
-  };
+export const getPokemons = () => async (dispatch) => {
+  try {
+    const pokemonsApi = await request.get('/pokemons');
+    dispatch({
+      type: GET_POKEMONSALL,
+      payload: pokemonsApi.data.succes,
+    });
+  } catch (error) {
+    alert(error.response.data.error);
+  }
+};
+export const getTypesPokemons = () => async (dispatch) => {
+  try {
+    const types = await request.get('/types');
+    return dispatch({
+      type: GET_TYPES,
+      payload: types.data.succes,
+    });
+  } catch (error) {
+    alert(error.response.data.error);
+  }
+};
+export const getPokemonsDetail = (id) => async (dispatch) => {
+  try {
+    const pokemons = await request.get(`/pokemons/${id}`);
+    return dispatch({
+      type: GET_DETAIL,
+      payload: pokemons.data.succes,
+    });
+  } catch (error) {
+    alert(error.response.data.error);
+  }
+};
+export const getPokemonByName = (name) => async (dispatch) => {
+  try {
+    const pokemon = await request.get(`/pokemons?name=${name}`);
+    console.log('💻 -> getPokemonByName -> pokemon', pokemon);
+    return dispatch({
+      type: GET_POKEMON,
+      payload: [pokemon.data.succes],
+    });
+  } catch (error) {
+    alert(error.response.data.error);
+  }
 };
 
-export const getTypesPokemons = () => {
-  return async function (dispatch) {
-    try {
-      const types = await request.get('/types');
-      return dispatch({
-        type: GET_TYPES,
-        payload: types.data.succes,
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-};
-
-export const getPokemonsDetail = (id) => {
-  return async function (dispatch) {
-    try {
-      const pokemons = await request.get(`/pokemons/${id}`);
-      return dispatch({
-        type: GET_DETAIL,
-        payload: pokemons.data.succes,
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-};
-
-export const getPokemonByName = (name) => {
-  return async function (dispatch) {
-    try {
-      const pokemon = await request.get(`/pokemons?name=${name}`);
-      return dispatch({
-        type: GET_POKEMON,
-        payload: pokemon.data.succes,
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-};
-
-export const filterPokemon = (isOn, events, filter) => {
-  return function (dispatch) {
+export const filterPokemon =
+  (isOn = true, events = 'Api', filter = 'ALF') =>
+  (dispatch) => {
     const { pokemons } = store.getState();
     const { api, db } = pokemons;
     let array;
@@ -85,26 +81,31 @@ export const filterPokemon = (isOn, events, filter) => {
         array = [...db, ...api];
         break;
       default:
-        console.log('nose que mierda llego', events);
+        alert('evento desconocido');
         break;
     }
 
-    if (filter === 'ALF') {
+    if (filter === 'ALF')
       configSort = (a, b) => (isOn ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
-    } else {
-      configSort = (a, b) => (isOn ? b.attack - a.attack : a.attack - b.attack);
-    }
+    else configSort = (a, b) => (isOn ? b.attack - a.attack : a.attack - b.attack);
 
     orderArray = array.sort(configSort);
 
+    function paginateArray(array, pageSize) {
+      let result = [];
+      for (let i = 0; i < array.length; i += pageSize) result.push(array.slice(i, i + pageSize));
+      return result;
+    }
+
     return dispatch({
       type: FILTERS_POKEMONS,
-      payload: orderArray,
+      payload: paginateArray(orderArray, 12),
     });
   };
-};
 
+export const updatePage = (page) => ({ type: UPDATE_PAGE, payload: page });
 /*
+
 const str1 = 'a';
 const str2 = 'b';
 

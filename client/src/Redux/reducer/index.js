@@ -5,15 +5,16 @@ import {
   GET_POKEMON,
   GET_DETAIL,
   GET_TYPES,
+  UPDATE_PAGE,
 } from '../actions/types';
 
 // *estado global
 const initialState = {
   pokemons: [],
   filters: [],
-  pokemon: {},
   detail: {},
   types: [],
+  page: 0,
 };
 
 const rootReducer = (state = initialState, { type, payload }) => {
@@ -31,7 +32,7 @@ const rootReducer = (state = initialState, { type, payload }) => {
     case GET_POKEMON:
       return {
         ...state,
-        pokemon: payload,
+        filters: payload,
       };
     case GET_DETAIL:
       return {
@@ -42,6 +43,11 @@ const rootReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         types: payload,
+      };
+    case UPDATE_PAGE:
+      return {
+        ...state,
+        page: payload,
       };
     default:
       return {
